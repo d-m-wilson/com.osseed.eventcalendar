@@ -8,7 +8,7 @@ require_once 'CRM/Core/Form.php';
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC43/QuickForm+Reference
  */
 class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
-  private $_settingFilter = array('group' => 'eventcalendar');
+  private $_settingFilter = array('group' => 'activitycalendar');
   private $_submittedValues = array();
   private $_settings = array();
 
@@ -22,7 +22,7 @@ class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
       if (isset($setting['quick_form_type'])) {
         $add = 'add' . $setting['quick_form_type'];
 
-        if ($name != 'eventcalendar_event_types') {
+        if ($name != 'activitycalendar_activity_types') {
           if ($add == 'addElement') {
             $this->$add($setting['html_type'], $name, ts($setting['title']),
               CRM_Utils_Array::value('html_attributes', $setting, array()));
@@ -33,22 +33,22 @@ class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
           $descriptions[$name] = $setting['description'];
         }
         else {
-          //special handling for event types; we construct these dynamically
+          //special handling for activity types; we construct these dynamically
           //and store as json
-          $eventTypes = CRM_Event_PseudoConstant::eventType();
-          foreach ($eventTypes as $id => $type) {
-            $this->addElement('checkbox', "eventtype_{$id}", $type, NULL,
-              array('onclick' => "showhidecolorbox('{$id}')", 'id' => "event_{$id}"));
-            $this->addElement('text', "eventcolor_{$id}", "Color",
+          $activityTypes = CRM_Core_PseudoConstant::activityType();
+          foreach ($activityTypes as $id => $type) {
+            $this->addElement('checkbox', "activitytype_{$id}", $type, NULL,
+              array('onclick' => "showhidecolorbox('{$id}')", 'id' => "activity_{$id}"));
+            $this->addElement('text', "activitycolor_{$id}", "Color",
               array(
-                'onchange' => "updatecolor('eventcolor_{$id}', this.value);",
+                'onchange' => "updatecolor('activitycolor_{$id}', this.value);",
                 'class' => 'color',
-                'id' => "eventcolorid_{$id}",
+                'id' => "activitycolorid_{$id}",
                 //'value'=> 'EXISTING VALUE?',
               ));
           }
 
-          $this->assign('eventTypes', $eventTypes);
+          $this->assign('activityTypes', $activityTypes);
         }
       }
     }
@@ -115,18 +115,18 @@ class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
     $settings = $this->getFormSettings();
     //Civi::log()->debug('saveSettings', array('_submitValues' => $this->_submitValues));
 
-    //we extract eventtype_ and eventcolor_ settings and store as json
-    $eventTypes = array();
+    //we extract activitytype_ and activitycolor_ settings and store as json
+    $activityTypes = array();
     foreach ($this->_submittedValues as $f => $v) {
-      if (strpos($f, 'eventtype_') !== FALSE) {
-        $id = str_replace('eventtype_', '', $f);
-        $eventTypes[] = array(
+      if (strpos($f, 'activitytype_') !== FALSE) {
+        $id = str_replace('activitytype_', '', $f);
+        $activityTypes[] = array(
           'id' => $id,
-          'color' => $this->_submittedValues["eventcolor_{$id}"],
+          'color' => $this->_submittedValues["activitycolor_{$id}"],
         );
       }
     }
-    $this->_submittedValues['eventcalendar_event_types'] = json_encode($eventTypes);
+    $this->_submittedValues['activitycalendar_activity_types'] = json_encode($activityTypes);
 
     foreach ($settings as $settingName => $settingDate) {
       if ($settingDate['html_type'] === 'checkbox' &&
@@ -152,11 +152,11 @@ class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
     $domainID = CRM_Core_Config::domainID();
     foreach ($existing['values'][$domainID] as $name => $value) {
       $defaults[$name] = $value;
-      if ($name == 'eventcalendar_event_types') {
-        // set event type color
-        foreach(json_decode($value, true) as $eventType) {
-          $defaults['eventtype_'.$eventType['id']] = 1;
-          $defaults['eventcolor_'.$eventType['id']] = $eventType['color'];
+      if ($name == 'activitycalendar_activity_types') {
+        // set activity type color
+        foreach(json_decode($value, true) as $activityType) {
+          $defaults['activitytype_'.$activityType['id']] = 1;
+          $defaults['activitycolor_'.$activityType['id']] = $activityType['color'];
         }
       }
     }

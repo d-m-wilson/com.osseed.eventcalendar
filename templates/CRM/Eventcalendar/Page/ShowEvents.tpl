@@ -1,7 +1,7 @@
 <div id="calendar"></div>
-{crmScript ext=com.osseed.eventcalendar file=fullcalendar.js}
-{crmStyle ext=com.osseed.eventcalendar file=fullcalendar.css}
-{crmStyle ext=com.osseed.eventcalendar file=civicrm_events.css}
+{crmScript ext=com.osseed.eventcalendar file=js/fullcalendar.js}
+{crmStyle ext=com.osseed.eventcalendar file=css/fullcalendar.css}
+{crmStyle ext=com.osseed.eventcalendar file=css/civicrm_events.css}
 
 {literal}
 <script type="text/javascript">
@@ -11,9 +11,9 @@
     buildCalendar( );
   });
  function buildCalendar( ) {
-  var events_data = {/literal}{$civicrm_events}{literal};
-  var jsonStr = JSON.stringify(events_data);
-  jQuery("#calendar").fullCalendar(events_data);		
+  var activities_data = {/literal}{$civicrm_activities}{literal};
+  var jsonStr = JSON.stringify(activities_data);
+  jQuery("#calendar").fullCalendar(activities_data);		
  }
 </script>
 {/literal}

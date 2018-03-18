@@ -45,103 +45,98 @@ class CRM_Eventcalendar_Page_ShowEvents extends CRM_Core_Page {
     $config = CRM_Core_Config::singleton();
 
     //get settings
-    $settings = $this->_eventCalendar_getSettings();
+    $settings = $this->_activityCalendar_getSettings();
 
     //set title from settings; allow empty value so we don't duplicate titles
     CRM_Utils_System::setTitle(ts($settings['calendar_title']));
 
     $whereCondition = '';
-    $eventTypes = $settings['event_types'];
+    $activityTypes = $settings['activity_types'];
 
-    if(!empty($eventTypes)) {
-      $eventTypesList = implode(',', array_keys($eventTypes));
-      $whereCondition .= " AND civicrm_event.event_type_id in ({$eventTypesList})";
+    if(!empty($activityTypes)) {
+      $activityTypesList = implode(',', array_keys($activityTypes));
+      $whereCondition .= " AND civicrm_activity.activity_type_id in ({$activityTypesList})";
     }
     else {
-      $whereCondition .= ' AND civicrm_event.event_type_id in (0)';
+      $whereCondition .= ' AND civicrm_activity.activity_type_id in (0)';
     }
 
-    //Show/Hide Past Events
+    //Show/Hide Past Activities
     $currentDate = date("Y-m-d h:i:s", time());
-    if (empty($settings['event_past'])) {
-      $whereCondition .= " AND civicrm_event.start_date > '" .$currentDate . "'";
+    if (empty($settings['activity_past'])) {
+      $whereCondition .= " AND civicrm_activity.activity_date_time > '" .$currentDate . "'";
     }
 
-    // Show events according to number of next months
-    if(!empty($settings['event_from_month'])) {
-      $monthEvents = $settings['event_from_month'];
-      $monthEventsDate = date("Y-m-d h:i:s",
-        strtotime(date("Y-m-d h:i:s", strtotime($currentDate))."+".$monthEvents." month"));
-      $whereCondition .= " AND civicrm_event.start_date < '" .$monthEventsDate . "'";
-    }
-
-    //Show/Hide Public Events
-    if(!empty($settings['event_is_public'])) {
-      $whereCondition .= " AND civicrm_event.is_public = 1";
+    // Show activities according to number of next months
+    if(!empty($settings['activity_from_month'])) {
+      $monthActivities = $settings['activity_from_month'];
+      $monthActivitiesDate = date("Y-m-d h:i:s",
+        strtotime(date("Y-m-d h:i:s", strtotime($currentDate))."+" . $monthActivities . " month"));
+      $whereCondition .= " AND civicrm_activity.activity_date_time < '" .$monthActivitiesDate . "'";
     }
 
     $query = "
-      SELECT `id`, `title`, `start_date` start, `end_date` end ,`event_type_id` event_type
-      FROM `civicrm_event`
-      WHERE civicrm_event.is_active = 1
-        AND civicrm_event.is_template = 0
+      SELECT `id`, IF(`subject` IS NULL, 'No title', IF(`subject` = 'NULL', 'No title', `subject`)) title, `activity_date_time` start, `activity_type_id` activity_type
+      FROM `civicrm_activity`
+      WHERE civicrm_activity.is_deleted = 0 AND civicrm_activity.activity_date_time > DATE_ADD(now(), interval -3 month)
     ";
 
     $query .= $whereCondition;
-    $events['events'] = array();
+    $activities['activities'] = array();
 
     $dao = CRM_Core_DAO::executeQuery($query);
-    $eventCalendarParams = array ('title' => 'title', 'start' => 'start', 'url' => 'url');
+    $activityCalendarParams = array ('title' => 'title', 'start' => 'start', 'url' => 'url');
 
-    if(!empty($settings['event_end_date'])) {
-      $eventCalendarParams['end'] = 'end';
+    if(!empty($settings['activity_end_date'])) {
+      $activityCalendarParams['end'] = 'end';
     }
 
     while ($dao->fetch()) {
-      $eventData = array();
+      $activityData = array();
 
-      $dao->url = html_entity_decode(CRM_Utils_System::url('civicrm/event/info', 'id='.$dao->id));
-      foreach ($eventCalendarParams as $k) {
-        $eventData[$k] = $dao->$k;
+      $dao->url = html_entity_decode(CRM_Utils_System::url('civicrm/activity/view', 'id='.$dao->id));
+      foreach ($activityCalendarParams as $k) {
+        $activityData[$k] = $dao->$k;
 
-        if(!empty($eventTypes)) {
-          $eventData['backgroundColor'] = "#{$eventTypes[$dao->event_type]}";
+        if(!empty($activityTypes)) {
+          $activityData['backgroundColor'] = "#{$activityTypes[$dao->activity_type]}";
         }
       }
-      $events['events'][] = $eventData;
+      $activities['events'][] = $activityData;
+	  
     }
-    //Civi::log()->debug('EventCalendar run', array('events' => $events));
+	
+    //Civi::log()->debug('ActivityCalendar run', array('activities' => $activities));
 
-    $events['header']['left'] = 'prev,next today';
-    $events['header']['center'] = 'title';
-    $events['header']['right'] = 'month,basicWeek,basicDay';
+    $activities['header']['left'] = 'prev,next today';
+    $activities['header']['center'] = 'title';
+    $activities['header']['right'] = 'month,basicWeek,basicDay';
 
-    //send Events array to calendar.
-    $this->assign('civicrm_events', json_encode($events));
+    //send Activities array to calendar.
+    $this->assign('civicrm_activities', json_encode($activities));
     parent::run();
   }
 
   /*
    * retrieve and reconstruct extension settings
    */
-  function _eventCalendar_getSettings() {
+  function _activityCalendar_getSettings() {
     $settings = array(
-      'calendar_title' => Civi::settings()->get('eventcalendar_calendar_title'),
-      'event_past' => Civi::settings()->get('eventcalendar_event_past'),
-      'event_end_date' => Civi::settings()->get('eventcalendar_event_end_date'),
-      'event_is_public' => Civi::settings()->get('eventcalendar_event_is_public'),
-      'event_month' => Civi::settings()->get('eventcalendar_event_month'),
-      'event_from_month' => Civi::settings()->get('eventcalendar_event_from_month'),
+      'calendar_title' => Civi::settings()->get('activitycalendar_calendar_title'),
+      'activity_past' => Civi::settings()->get('activitycalendar_activity_past'),
+      'activity_end_date' => Civi::settings()->get('activitycalendar_activity_end_date'),
+      'activity_month' => Civi::settings()->get('activitycalendar_activity_month'),
+      'activity_from_month' => Civi::settings()->get('activitycalendar_activity_from_month'),
     );
 
-    $eventTypes = Civi::settings()->get('eventcalendar_event_types');
-    $eventTypes = json_decode($eventTypes);
-    foreach ($eventTypes as $eventType) {
-      $settings['event_types'][$eventType->id] = $eventType->color;
+    $activityTypes = Civi::settings()->get('activitycalendar_activity_types');
+    $activityTypes = json_decode($activityTypes);
+    foreach ($activityTypes as $activityType) {
+      $settings['activity_types'][$activityType->id] = $activityType->color;
     }
 
-    /*Civi::log()->debug('_eventCalendar_getSettings', array(
-      'eventTypes' => $eventTypes,
+    /*Civi::log()->debug('_activityCalendar_getSettings', array(
+      'activityTypes' => $activityTypes,
       'settings' => $settings,
     ));*/
 

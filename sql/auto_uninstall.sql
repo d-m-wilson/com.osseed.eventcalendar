@@ -1,2 +1,2 @@
-DELETE FROM civicrm_navigation WHERE name = 'Show Events Calendar';
-DELETE FROM civicrm_navigation WHERE name = 'Event Calendar Settings';
+DELETE FROM civicrm_navigation WHERE name = 'Show Activities Calendar';
+DELETE FROM civicrm_navigation WHERE name = 'Activity Calendar Settings';
