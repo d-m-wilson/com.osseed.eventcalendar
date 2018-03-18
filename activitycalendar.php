@@ -1,14 +1,14 @@
 <?php
 
-require_once 'eventcalendar.civix.php';
+require_once 'activitycalendar.civix.php';
 
 /**
  * Implements hook_civicrm_config().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
-function eventcalendar_civicrm_config(&$config) {
-  _eventcalendar_civix_civicrm_config($config);
+function activitycalendar_civicrm_config(&$config) {
+  _activitycalendar_civix_civicrm_config($config);
 }
 
 /**
@@ -18,8 +18,8 @@ function eventcalendar_civicrm_config(&$config) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
  */
-function eventcalendar_civicrm_xmlMenu(&$files) {
-  _eventcalendar_civix_civicrm_xmlMenu($files);
+function activitycalendar_civicrm_xmlMenu(&$files) {
+  _activitycalendar_civix_civicrm_xmlMenu($files);
 }
 
 /**
@@ -27,8 +27,8 @@ function eventcalendar_civicrm_xmlMenu(&$files) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
-function eventcalendar_civicrm_install() {
-  _eventcalendar_civix_civicrm_install();
+function activitycalendar_civicrm_install() {
+  _activitycalendar_civix_civicrm_install();
 }
 
 /**
@@ -36,8 +36,8 @@ function eventcalendar_civicrm_install() {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
-function eventcalendar_civicrm_uninstall() {
-  _eventcalendar_civix_civicrm_uninstall();
+function activitycalendar_civicrm_uninstall() {
+  _activitycalendar_civix_civicrm_uninstall();
 }
 
 /**
@@ -45,8 +45,8 @@ function eventcalendar_civicrm_uninstall() {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
-function eventcalendar_civicrm_enable() {
-  _eventcalendar_civix_civicrm_enable();
+function activitycalendar_civicrm_enable() {
+  _activitycalendar_civix_civicrm_enable();
 }
 
 /**
@@ -54,8 +54,8 @@ function eventcalendar_civicrm_enable() {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
  */
-function eventcalendar_civicrm_disable() {
-  _eventcalendar_civix_civicrm_disable();
+function activitycalendar_civicrm_disable() {
+  _activitycalendar_civix_civicrm_disable();
 }
 
 /**
@@ -70,8 +70,8 @@ function eventcalendar_civicrm_disable() {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
  */
-function eventcalendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  return _eventcalendar_civix_civicrm_upgrade($op, $queue);
+function activitycalendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
+  return _activitycalendar_civix_civicrm_upgrade($op, $queue);
 }
 
 /**
@@ -82,8 +82,8 @@ function eventcalendar_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
  */
-function eventcalendar_civicrm_managed(&$entities) {
-  _eventcalendar_civix_civicrm_managed($entities);
+function activitycalendar_civicrm_managed(&$entities) {
+  _activitycalendar_civix_civicrm_managed($entities);
 }
 
 /**
@@ -95,8 +95,8 @@ function eventcalendar_civicrm_managed(&$entities) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
-function eventcalendar_civicrm_caseTypes(&$caseTypes) {
-  _eventcalendar_civix_civicrm_caseTypes($caseTypes);
+function activitycalendar_civicrm_caseTypes(&$caseTypes) {
+  _activitycalendar_civix_civicrm_caseTypes($caseTypes);
 }
 
 /**
@@ -109,8 +109,8 @@ function eventcalendar_civicrm_caseTypes(&$caseTypes) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
-function eventcalendar_civicrm_angularModules(&$angularModules) {
-  _eventcalendar_civix_civicrm_angularModules($angularModules);
+function activitycalendar_civicrm_angularModules(&$angularModules) {
+  _activitycalendar_civix_civicrm_angularModules($angularModules);
 }
 
 /**
@@ -118,8 +118,8 @@ function eventcalendar_civicrm_angularModules(&$angularModules) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
  */
-function eventcalendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
-  _eventcalendar_civix_civicrm_alterSettingsFolders($metaDataFolders);
+function activitycalendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
+  _activitycalendar_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
 /**
@@ -131,7 +131,7 @@ function eventcalendar_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
  *
-function eventcalendar_civicrm_preProcess($formName, &$form) {
+function activitycalendar_civicrm_preProcess($formName, &$form) {
 
 } // */
 
@@ -140,14 +140,14 @@ function eventcalendar_civicrm_preProcess($formName, &$form) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
  *
-function eventcalendar_civicrm_navigationMenu(&$menu) {
-_eventcalendar_civix_insert_navigation_menu($menu, NULL, array(
-'label' => ts('The Page', array('domain' => 'com.osseed.eventcalendar')),
+function activitycalendar_civicrm_navigationMenu(&$menu) {
+_activitycalendar_civix_insert_navigation_menu($menu, NULL, array(
+'label' => ts('The Page', array('domain' => 'info.dmwilson.activitycalendar')),
 'name' => 'the_page',
 'url' => 'civicrm/the-page',
 'permission' => 'access CiviReport,access CiviContribute',
 'operator' => 'OR',
 'separator' => 0,
 ));
-_eventcalendar_civix_navigationMenu($menu);
+_activitycalendar_civix_navigationMenu($menu);
 } // */
