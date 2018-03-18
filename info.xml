@@ -18,7 +18,7 @@
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
-  <comments>Show CiviCRM activities in Calendar</comments>
+  <comments>Show CiviCRM activities in a Calendar. Based on the excellent Event Calendar extension by OSSeed: https://github.com/osseed/com.osseed.eventcalendar/</comments>
   <civix>
     <namespace>CRM/ActivityCalendar</namespace>
   </civix>

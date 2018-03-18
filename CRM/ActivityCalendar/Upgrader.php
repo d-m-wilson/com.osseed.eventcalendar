@@ -3,7 +3,7 @@
 /**
  * Collection of upgrade steps
  */
-class CRM_Eventcalendar_Upgrader extends CRM_Eventcalendar_Upgrader_Base {
+class CRM_ActivityCalendar_Upgrader extends CRM_ActivityCalendar_Upgrader_Base {
 
   // By convention, functions that look like "function upgrade_NNNN()" are
   // upgrade tasks. They are executed in order (like Drupal's hook_update_N).

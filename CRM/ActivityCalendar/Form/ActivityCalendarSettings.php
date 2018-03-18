@@ -7,14 +7,14 @@ require_once 'CRM/Core/Form.php';
  *
  * @see http://wiki.civicrm.org/confluence/display/CRMDOC43/QuickForm+Reference
  */
-class CRM_Eventcalendar_Form_EventCalendarSettings extends CRM_Core_Form {
+class CRM_ActivityCalendar_Form_ActivityCalendarSettings extends CRM_Core_Form {
   private $_settingFilter = array('group' => 'activitycalendar');
   private $_submittedValues = array();
   private $_settings = array();
 
   function buildQuickForm() {
-    CRM_Core_Resources::singleton()->addScriptFile('com.osseed.eventcalendar', 'js/jscolor.js');
-    CRM_Core_Resources::singleton()->addScriptFile('com.osseed.eventcalendar', 'js/eventcalendar.js');
+    CRM_Core_Resources::singleton()->addScriptFile('info.dmwilson.activitycalendar', 'js/jscolor.js');
+    CRM_Core_Resources::singleton()->addScriptFile('info.dmwilson.activitycalendar', 'js/activitycalendar.js');
 
     $settings = $this->getFormSettings();
     $descriptions = array();

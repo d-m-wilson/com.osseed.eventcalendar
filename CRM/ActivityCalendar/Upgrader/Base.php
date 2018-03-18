@@ -5,7 +5,7 @@
 /**
  * Base class which provides helpers to execute upgrade logic
  */
-class CRM_Eventcalendar_Upgrader_Base {
+class CRM_ActivityCalendar_Upgrader_Base {
 
   /**
    * @var varies, subclass of htis
@@ -38,8 +38,8 @@ class CRM_Eventcalendar_Upgrader_Base {
   static public function instance() {
     if (! self::$instance) {
       // FIXME auto-generate
-      self::$instance = new CRM_Eventcalendar_Upgrader(
-        'com.osseed.eventcalendar',
+      self::$instance = new CRM_ActivityCalendar_Upgrader(
+        'info.dmwilson.activitycalendar',
         __DIR__ .'/../../../'
       );
     }
@@ -53,7 +53,7 @@ class CRM_Eventcalendar_Upgrader_Base {
    * task-context; otherwise, this will be non-reentrant.
    *
    * @code
-   * CRM_Eventcalendar_Upgrader_Base::_queueAdapter($ctx, 'methodName', 'arg1', 'arg2');
+   * CRM_ActivityCalendar_Upgrader_Base::_queueAdapter($ctx, 'methodName', 'arg1', 'arg2');
    * @endcode
    */
   static public function _queueAdapter() {

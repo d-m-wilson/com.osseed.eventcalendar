@@ -2,14 +2,14 @@
 <menu>
   <item>
     <path>civicrm/showactivities</path>
-    <page_callback>CRM_Eventcalendar_Page_ShowEvents</page_callback>
+    <page_callback>CRM_ActivityCalendar_Page_ShowActivities</page_callback>
     <title>Show Activities</title>
     <access_arguments>view all activities</access_arguments>
     <is_public>false</is_public>
   </item>
   <item>
     <path>civicrm/activitycalendarsettings</path>
-    <page_callback>CRM_Eventcalendar_Form_EventCalendarSettings</page_callback>
+    <page_callback>CRM_ActivityCalendar_Form_ActivityCalendarSettings</page_callback>
     <title>Activity Calendar Settings</title>
     <access_arguments>administer CiviCRM</access_arguments>
   </item>
