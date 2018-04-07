@@ -35,7 +35,7 @@ class CRM_ActivityCalendar_Form_ActivityCalendarSettings extends CRM_Core_Form {
         else {
           //special handling for activity types; we construct these dynamically
           //and store as json
-          $activityTypes = CRM_Core_PseudoConstant::activityType();
+          $activityTypes = CRM_Core_PseudoConstant::activityType(TRUE, TRUE);
 
           //Civi::log()->debug('ActivityCalendarSettings::buildQuickForm', array(
           //  'activityTypes' => $activityTypes
